@@ -1,6 +1,7 @@
-class stop_candidate(point):
-    def __init__(self, point):
-        self.point = point
+class stopCandidate():
+    def __init__(self, lat, long):
+        self.lat = lat
+        self.long = long
         self.enabled = False
         
     def enable(self):
@@ -8,3 +9,9 @@ class stop_candidate(point):
         
     def disable(self):
         self.enabled = False
+        
+    def getLat(self):
+        return self.lat
+    
+    def getLong(self):
+        return self.long
