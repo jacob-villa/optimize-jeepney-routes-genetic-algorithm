@@ -18,21 +18,11 @@ ox.settings.log_console=True
 ox.settings.use_cache=True
 
 
-
-#sample_list = [[14.549782711255753, 121.00515608352754],[14.549163881741926, 121.00433654028181], [14.54816721998631, 121.00252036521498],
-#               [14.547892358182233, 120.99867935257014], [14.548951532876389, 120.99845743761652], [14.54975898911636, 120.99826284183357]]
-
-
-MAX_DISTANCE = 5
+MAX_DISTANCE = 15
 WALKING_DISTANCES = [300,550,800]
+colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'cyan', 'magenta', 'lime', 'pink']
 
-sample_list = [[14.554747648304462, 120.99708773241291],
-            [14.55682541697913, 120.9966188462127], [14.558134432084954, 120.99631901422849], [14.562959814489666, 120.9951164965514],
-            [14.56521038861722, 120.99407027429525], [14.567639994973721, 120.99291241244708], [14.571400341625692, 120.99106589101036], 
-            [14.57326454125839, 120.99002386850968], [14.574683418006057, 120.99015017430045], [14.576316206390171, 120.98877434369244],
-            [14.578573276306315, 120.9869744866499], [14.580597203953493, 120.9858397325545], [14.583103926540224, 120.9844243629383],
-            [14.58378673371261, 120.98401469555728], [14.584495235716412, 120.98363916714366], [14.58520740641153, 120.98324467266578], [14.585805774843385, 120.982929835702],
-            [14.586943775676762, 120.98223290339324], [14.58772940326058, 120.98388821313192]] 
+sample_list = [[14.55820324,120.99271588],[14.67736013,121.06370599],[14.44087539,120.96480535],[14.66010137,121.00552241],[14.67582084,120.97917578],[14.68846586,121.06735489],[14.59969414,121.03524401],[14.51854099,121.03136655],[14.6944043,120.96867543],[14.5563217,121.07754653],[14.58395269,121.009026],[14.71428035,121.05318844],[14.63796946,121.08900077],[14.68840554,121.04276003],[14.62446177,121.03960171],[14.57615011,121.03103186],[14.68047839,121.00882462],[14.61102805,121.03803691],[14.65562362,121.03747689],[14.63428298,121.02315351],[14.59367792,121.08552916],[14.61496911,120.96150489],[14.49455642,121.03632284],[14.52785148,121.07707068],[14.63969782,121.06757377],[14.72545455,120.99808766],[14.65138419,121.07051039],[14.53648099,121.07554772],[14.61327739,120.98706874],[14.7163623,120.99811453],[14.70024841,121.02352652],[14.64942255,121.08590113],[14.44703678,121.01101709],[14.44215199,121.01550486],[14.54165084,121.03013544],[14.63736669,121.00484071],[14.65543842,121.01469844],[14.69615693,121.05405007],[14.59582863,121.04494513],[14.4672852,120.99129503],[14.55859342,121.0016252],[14.57573588,121.07675665],[14.58081946,120.98392977],[14.61193905,121.02728961],[14.4384651,120.9883522],[14.67663015,120.95704148],[14.58188072,121.03112538],[14.58231564,121.01074813],[14.61952633,121.03024989],[14.60702046,121.01301824],[14.69292332,120.98808483],[14.59824403,121.03330051],[14.43566221,120.97401883],[14.69794719,120.98111104],[14.59550621,121.07080338],[14.45936723,121.04212204],[14.53617335,121.07731764],[14.71078316,121.04049493],[14.50735874,121.03907134],[14.6864969,121.08484785],[14.65509136,121.04779834],[14.57888998,121.05292725],[14.67192032,120.97574468],[14.4973495,121.05733039],[14.68184463,121.03149686],[14.72650157,120.97394383],[14.69790796,121.07487706],[14.45344411,121.04490347],[14.63868507,121.04444338],[14.50231075,120.99807186],[14.43959588,121.02509234],[14.68261589,120.96242323],[14.72485542,121.01299281],[14.58322369,121.01447599],[14.67123132,121.04123659],[14.60558001,121.08405982],[14.45011738,120.98999835],[14.66114487,120.96992306],[14.49985795,121.05785851],[14.53736977,121.08187118],[14.53622662,121.02906501],[14.59617857,121.00179193],[14.5388522,121.07337775],[14.43692456,121.01233361],[14.68664721,121.08457592],[14.54565777,121.04755655],[14.52327443,121.0347132],[14.65601779,121.0461127],[14.47007772,121.02008342],[14.6776021,121.04271068],[14.60737226,120.98397032],[14.47543653,121.02949694],[14.60198032,121.00463174],[14.46116767,121.04024682],[14.46144194,121.0395247],[14.59669815,121.07887086],[14.60226846,121.07731067],[14.66798856,121.08055865],[14.55934149,121.06013169],[14.51857845,121.03619419],[14.72091861,120.9731885],[14.54069915,121.02634641],[14.57894624,121.07754012],[14.51553237,121.07041719],[14.68491504,120.95990223],[14.71266055,121.04447903],[14.67047015,121.04743715],[14.49727616,121.02700058],[14.57942463,121.02734004],[14.48682048,121.05306338],[14.60135917,120.98037093],[14.68577896,121.02836462],[14.55474596,121.01697453],[14.62604571,121.04736863],[14.72411477,120.99674891],[14.65876292,121.06815126],[14.53470539,121.08178085],[14.58808667,121.05836262],[14.63250216,120.96704797],[14.4723381,121.0322874],[14.5532874,121.05018914],[14.51615166,121.06814045],[14.47170787,120.98884609],[14.49123999,121.02244802],[14.60675883,121.02864645],[14.47975831,121.0516267],[14.6026604,121.04531354],[14.72153054,121.00523589],[14.57608016,121.04005992],[14.68738844,121.09067366],[14.60252123,121.01272277],[14.68426545,121.02886611],[14.65373801,121.02995595],[14.59770938,121.02927924],[14.62060749,121.03767257],[14.72598521,120.95843269],[14.62558255,121.0379151],[14.522141,121.06813073],[14.68508825,121.02777006],[14.57410668,121.01783286],[14.65167849,121.02623058],[14.7227,121.00275333],[14.71867643,121.03861321],[14.44624564,120.9982853],[14.55042948,121.00487298],[14.67959045,121.02535213],[14.65581958,121.00831317],[14.54399834,121.04911272],[14.49753273,121.03251303],[14.53392981,121.01039963],[14.71428417,120.99603868],[14.62804118,121.03376718],[14.58327883,121.04742346],[14.59202403,120.99922025],[14.64060533,121.01325225],[14.60608361,120.97934671],[14.60184942,121.00164006],[14.52005313,121.07458641],[14.71044623,121.02102646],[14.6324198,120.98870328],[14.63421092,121.0174889],[14.60268225,121.07356315],[14.60206155,120.96739007],[14.71191798,120.99704026]]
 
 # IF FIRST TIME RUNNING, RUN THIS CODE TO GENERATE THE GRAPH
 def generate_graph():
@@ -51,42 +41,27 @@ def load_graph():
     print('\n')
     return graph
 
-
-def connect_stops():
-    routes = []
-    print(f"NUMBER OF POINTS: {len(sample_list)}")
-    for i in range(len(sample_list)-1):
-        #print("Calculating route from", sample_list[i], "to", sample_list[i+1])
-        orig_node = ox.distance.nearest_nodes(graph, sample_list[i][1], sample_list[i][0])
-        dest_node = ox.distance.nearest_nodes(graph, sample_list[i+1][1], sample_list[i+1][0])
-        
-        if orig_node is None or dest_node is None:
-            print("Unable to find valid nodes. Please verify the start and end coordinates.")
-        elif not nx.has_path(graph, orig_node, dest_node):
-            print("No valid path found between the start and end nodes.")
-        else:
-            shortest_route = nx.shortest_path(graph, orig_node, dest_node)
-            # shortest_route_map = ox.plot_route_folium(graph, shortest_route, tiles='openstreetmap')
-            # shortest_route_map.save("shortest_route_map.html")
-            
-            routes.append(shortest_route)
-    return routes
-
+# Generate Route Network from connected routes
 def generate_route_network(stop_nodes, max_walking_dist):
-    stop_node_coordinates = sample_list
+    stop_node_coordinates = locs
     stop_nodes_kd_tree = KDTree(stop_node_coordinates)
+    next_nodes = [n for n in stop_nodes]
+    enable_stop_nodes(next_nodes)
+    route_network = []
     
-    route_network = generate_route(stop_nodes, stop_nodes_kd_tree, max_walking_dist)
+    while not all_nodes_disabled(next_nodes) and len(next_nodes) != 0:
+        selected_node = random.choice(next_nodes) # For the first node
+        next_nodes.remove(selected_node)
+        
+        route_network.append(generate_route(selected_node, next_nodes, stop_nodes_kd_tree, max_walking_dist))
 
     return route_network
 
-def generate_route(stop_nodes, stop_nodes_kd_tree, max_walking_dist):
+# Generate route from stop nodes
+def generate_route(source, next_nodes, stop_nodes_kd_tree, max_walking_dist):
     route = []
-    enable_stop_nodes(stop_nodes)
-    #selected_node = random.choice(stop_nodes)
-    selected_node = stop_nodes[0] # TEMPORARY
-    next_nodes = [nodes for nodes in stop_nodes if nodes != selected_node]
     totalDistance = 0
+    selected_node = source
 
     while not all_nodes_disabled(next_nodes) and totalDistance <= MAX_DISTANCE:
         used_stops.append(selected_node)
@@ -96,7 +71,8 @@ def generate_route(stop_nodes, stop_nodes_kd_tree, max_walking_dist):
         orig_node = ox.distance.nearest_nodes(graph, selected_node.getLong(), selected_node.getLat())
         old_node = selected_node
         selected_node = get_enabled_node_with_highest_edge_probability(selected_node, enabled_nodes)
-        if (selected_node == None):
+        
+        if (selected_node == None or selected_node == old_node):
             break
         
         next_nodes.remove(selected_node)
@@ -114,6 +90,7 @@ def generate_route(stop_nodes, stop_nodes_kd_tree, max_walking_dist):
     print(f"Total Distance: {totalDistance}km")
     return route
 
+# Disable surrounding nodes
 def disable_surrounding_nodes(next_nodes, stop_nodes_kd_tree, source_node, max_distance):
     source = (source_node.getLat(), source_node.getLong())
     
@@ -166,13 +143,6 @@ def all_nodes_disabled(stop_nodes):
 def get_num_disabled(stop_nodes):
     return sum(1 for n in stop_nodes if not n.enabled)
 
-# def euclidean(x, y):
-#     sum_square = 0.0
-#     for i in range(len(x)):
-#         sum_square += (x[i] - y[i]) ** 2
-
-#     return sum_square ** 0.5
-
 # TO CALCULATE DISTANCE
 def haversine(lat1, lon1, lat2, lon2):
     # Convert decimal degrees to radians
@@ -186,111 +156,54 @@ def haversine(lat1, lon1, lat2, lon2):
     distance = 6371 * c  # Radius of earth in kilometers
     return distance
 
-
-
-
-
+def is_valid_location(coord):
+    # Gets the nearest node to the coordinates
+    nearest_node = ox.distance.nearest_nodes(graph, coord[0], coord[1])
+    
+    # Checks if it is a valid location
+    if graph.has_node(nearest_node):
+        return True
+    else:
+        return False
 
 #MAIN -----------------------------------------------------------
 
-# Generate stops from coordinates
-stops = []
-for coord in sample_list:
-    stops.append(stopCandidate(coord[0], coord[1]))
-
 # Load graph
 graph = load_graph()
-#old_routes = connect_stops() # OLD CONNECT FUNCTION -> FOR TESTING ONLY
+
+# Generate stops from coordinates
+stops = []
+locs = [] # TEMPORARY
+for coord in sample_list:
+    if is_valid_location(coord):
+        stops.append(stopCandidate(coord[0], coord[1]))
+        locs.append(coord) # TEMPORARY
 
 # Generate route network
 used_stops = []
-route_network = generate_route_network(stops, WALKING_DISTANCES[0]) # Default max walking distance is 300m
+route_network = generate_route_network(stops, WALKING_DISTANCES[2]) # Default max walking distance is 300m
 
 
-
+# Creating Map
 map_center = (sample_list[0][0], sample_list[0][1])
-# Folium map 1 ----------------------------------------------------------
-# m1 = folium.Map(location=map_center, zoom_start=15, tiles='openstreetmap')
-
-# # Add markers to the map
-# for point in sample_list:
-#     folium.Marker(location=[point[0], point[1]]).add_to(m1)
-
-# for route in old_routes:
-#     route_coordinates = []
-#     for node in route:
-#         node_data = graph.nodes[node]
-#         route_coordinates.append([node_data['y'], node_data['x']])
-#     folium.PolyLine(locations=route_coordinates, color='blue').add_to(m1)
-
-# m1.save("Map1.html")
-
-# Folium map2 -----------------------------------------------------------
 m2 = folium.Map(location=map_center, zoom_start=15, tiles='openstreetmap')
 
+# Plotting in the Map
 for stop in used_stops:
     folium.Marker(location=[stop.getLat(), stop.getLong()]).add_to(m2)
     
 for route in route_network:
     route_coordinates = []
     for node in route:
-        node_data = graph.nodes[node]
+        node_data = graph.nodes[node[0]]
         route_coordinates.append([node_data['y'], node_data['x']])
-    folium.PolyLine(locations=route_coordinates, color='blue').add_to(m2)
+    random_color = random.choice(colors)
+    folium.PolyLine(locations=route_coordinates, color=random_color).add_to(m2)
 
 m2.save("Map2.html")
 
 # Open the HTML file in a web browser to view the map
 webbrowser.open("Map2.html")
-
-#rc = ['r', 'y', 'c', 'm', 'g']
-#ox.plot_graph_routes(graph, routes, route_colors=rc, route_linewidth=6, node_size=0)
-
-
-
-
-
-
-
-# Constraints
-# - Route does not go above 15km (LTFRB)
-# - Route does no go below the radius
-
-# Manhattan distance(Manhattan Distance = | x 1 − x 2 | + | y 1 − y 2 |)
-
-
-# def manhattan_distance(lat1, lon1, lat2, lon2):
-
-
-
-
-
-# def generate_route_network(stop_nodes, max_walking_dist, num_generations):
-#     # k-dimensional tree is built only once per route for optimization
-#     stop_node_coordinates = [n.latlng for n in stop_nodes]
-#     stop_nodes_kd_tree = KDTree(stop_node_coordinates)
-#     possible_start_nodes = [x for x in stop_nodes]
-
-#     route_network = []
-#     for i in range(num_generations):
-#         route_network.append(generate_route(stop_nodes, possible_start_nodes, stop_nodes_kd_tree, max_walking_dist))
-
-#     return route_network
-
-
-# def generate_route(stop_nodes, possible_start_nodes, stop_nodes_kd_tree, max_walking_dist):
-#     route = []
-#     enable_stop_nodes(stop_nodes)
-#     selected_node = random.choice(possible_start_nodes)
-#     possible_start_nodes.remove(selected_node)
-
-#     while not all_nodes_disabled(stop_nodes):
-#         route.append(selected_node)
-#         disable_surrounding_nodes(stop_nodes, stop_nodes_kd_tree, selected_node, max_walking_dist / 111111)
-#         enabled_nodes = [n for n in stop_nodes if n.enabled]
-#         selected_node = get_enabled_node_with_highest_edge_probability(selected_node, enabled_nodes)
-
-#     return route
 
 
 
