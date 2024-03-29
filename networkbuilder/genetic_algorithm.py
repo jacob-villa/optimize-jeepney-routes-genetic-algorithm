@@ -5,16 +5,30 @@ import numpy as np
 import random
 
 """
-This is written in pseudocode.
+This is written in somewhat pseudocode.
 num_evolutions -> num_generations
 num_generated_network_mutations_per_evolution -> num_mutations_per_generation
 mutation_probabilities = list of probabilities for mutation that will be randomly selected from
     e.g. [0.1, 0.2, 0.3, 0.4, 0.5] would mean a 0.1 probability for 0 mutations, 0.2 probability for 1 mutation, etc
 
 """
-def perform_genetic_algorithm(network_population, num_generations, mutation_probabilities, crossover_probabilities):
+# Cite Nayeem et al for GA with elitism and growing population size
+def perform_genetic_algorithm(network_population, num_elites, num_generations, mutation_probabilities, crossover_probabilities,
+                              with_elitism=False, with_growing_population=False, num_mutations_per_generation=1):
+    new_network_population = []
     # Do this for the assigned number of generations for the GA
     for i in range(num_generations):
+        # Evaluate the fitness of each network in the population
+        for network in network_population:
+            network.fitness_score = compute_fitness_score(network)
+
+        sorted_network_population = sorted(network_population, key=lambda x: x.fitness_score, reverse=True)
+
+        # Take num_elites number of the best networks and automatically add them to the next generation
+        if (with_elitism):
+            for i in range(num_elites):
+                new_network_population.append(sorted_network_population[i])
+
         # Randomly select how many crossovers for this generation
         num_crossovers = np.random.choice(len(crossover_probabilities), 1, p=crossover_probabilities)[0]
 
@@ -34,9 +48,12 @@ def perform_genetic_algorithm(network_population, num_generations, mutation_prob
             num_mutations = np.random.choice(len(mutation_probabilities), 1, p=mutation_probabilities)[0]
 
             # Perform all mutations
-            for i in range(num_mutations):
-                network = mutate(network)
-    pass
+            if num_mutations > 0:
+                for i in range(num_mutations):
+                    network = mutate(network)
+    
+    return new_network_population
+
 
 # Assumes that ideally both networks have the same number of routes (same length)
 def crossover(network1, network2):
