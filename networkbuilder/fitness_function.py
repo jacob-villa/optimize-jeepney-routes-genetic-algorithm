@@ -2,6 +2,20 @@ import networkx as nx
 import numpy as np
 import random
 
+def select_highest_scoring_mutation(candidate_road_snapped_networks, num_failure_removal,
+                                    weight_random_failure, weight_targeted_failure, weight_radius_of_gyration):
+    max_fitness_score = -np.inf
+    max_candidate_route_snapped_network = None
+
+    for n in candidate_road_snapped_networks:
+        fitness_score = compute_fitness_score(n, num_failure_removal,
+                                              weight_random_failure, weight_targeted_failure, weight_radius_of_gyration)
+        if fitness_score > max_fitness_score:
+            max_fitness_score = fitness_score
+            max_candidate_route_snapped_network = n
+
+    return max_candidate_route_snapped_network
+
 def compute_fitness_score(road_snapped_network_graph, num_failure_removal,
                           weight_random_failure, weight_targeted_failure, weight_radius_of_gyration):
 
