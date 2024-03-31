@@ -33,6 +33,44 @@ def compute_fitness_score(road_snapped_network_graph, num_failure_removal,
     return weighted_radius_of_gyration - weighted_random_failure_robustness - weighted_targeted_failure_robustness
     # return weighted_radius_of_gyration
 
+
+### WRITTEN IN PSEUDOCODE
+def compute_connectivity(network):
+    # External connectivity - measure how connected is the jeepney route network with other modes of transpo
+    
+    # Get the ratio of transportation stops to total stops in the network
+    num_transpo_stops = count(stop in network where stop.type = 'Transportation')
+    total_stops = count(stop in network)
+    transpo_stop_ratio = num_transpo_stops / total_stops
+
+    # Get the average degree of all transportation stops in the network
+    transpo_stops = get_stops(network, type='Transportation')
+    avg_transpo_degree = sum(degree(stop) for stop in transpo_stops) / len(transpo_stops)
+
+    # Find a way to normalize the two values and combine them 
+
+
+    # Internal connectivity - measure how connected is each jeepney route to other jeepney routes
+
+    # Count number of route intersections in the network
+    intersections = set()
+    for i, route in network:
+        for j, other_route in network:
+            if i != j and route.intersects(other_route):
+                intersection_key = tuple(sorted([i, j]))
+                if intersection_key not in intersections:
+                    intersections.add(intersection_key)
+
+    num_intersections = len(intersections)
+    
+    # Change these weights based on what the expected values for 
+    # the transpo_stop_ratio, avg_transpo_degree, and num_intersections will be
+    external_weight = 0.5
+    internal_weight = 0.5
+
+    return external_weight * transpo_stop_ratio + internal_weight * avg_transpo_degree
+
+
 def compute_random_failure_robustness(road_snapped_network_graph, num_removals):
     print(road_snapped_network_graph)
     for i in range(num_removals):
