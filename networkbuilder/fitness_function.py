@@ -2,6 +2,7 @@ import networkx as nx
 import numpy as np
 import random
 
+
 def select_highest_scoring_mutation(candidate_road_snapped_networks, num_failure_removal,
                                     weight_random_failure, weight_targeted_failure, weight_radius_of_gyration):
     max_fitness_score = -np.inf
@@ -28,8 +29,9 @@ def compute_fitness_score(road_snapped_network_graph, num_failure_removal,
     radius_of_gyration = compute_radius_of_gyration(road_snapped_network_graph, 100, weight_radius_of_gyration)
     weighted_radius_of_gyration = weight_radius_of_gyration * radius_of_gyration
 
-    # return weighted_radius_of_gyration - weighted_random_failure_robustness - weighted_targeted_failure_robustness
-    return weighted_radius_of_gyration
+    # Will use this return for now to utilize target and random failure nodes 
+    return weighted_radius_of_gyration - weighted_random_failure_robustness - weighted_targeted_failure_robustness
+    # return weighted_radius_of_gyration
 
 def compute_random_failure_robustness(road_snapped_network_graph, num_removals):
     print(road_snapped_network_graph)
@@ -50,6 +52,9 @@ def compute_targeted_failure_robustness(road_snapped_network_graph, num_removals
 
     diameter, avg_path_length, giant_component_fraction = compute_network_statistics(road_snapped_network_graph)
     return compute_failure_robustness(road_snapped_network_graph, diameter)
+
+def compute_failure_robustness(road_snapped_network_graph, max_path_length):
+    return float(max_path_length) / float(len(road_snapped_network_graph) - 1)
 
 def compute_radius_of_gyration(road_snapped_network_graph, num_random_values, weight):
     return _get_efficiency_sum(road_snapped_network_graph, num_random_values, weight)
@@ -137,7 +142,5 @@ def compute_network_statistics(road_snapped_network_graph):
 def get_path_lengths(snapped_road_network_graph):
     return [sum(nx.single_source_shortest_path_length(snapped_road_network_graph, n).values())
             for n in snapped_road_network_graph]
-# Im assuming that we're giving a network in the form of a vector of vectors of latlong coordinates somewhat
-# so I told it about the thing in our paper, the description for vulnerability
-# I just need to know what degree values mean hol
+
 
