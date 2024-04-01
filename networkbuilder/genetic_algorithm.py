@@ -3,6 +3,8 @@ from __future__ import absolute_import, division
 import networkx as nx
 import numpy as np
 import random
+import osmnx as ox
+from routeGenerator import haversine
 
 """
 This is written in somewhat pseudocode.
@@ -10,12 +12,16 @@ num_evolutions -> num_generations
 num_generated_network_mutations_per_evolution -> num_mutations_per_generation
 mutation_probabilities = list of probabilities for mutation that will be randomly selected from
     e.g. [0.1, 0.2, 0.3, 0.4, 0.5] would mean a 0.1 probability for 0 mutations, 0.2 probability for 1 mutation, etc
+
+
+ASSUMPTION: Input is a jeepney route network, represented as a vector of routes, where each route is a vector of stops
 """
 
 # This implementation takes only 2 parents from the whole generation and generates the population from them
 # Instead of the what's in the paper that says the whole population will go through crossovers and mutations
 # Cite Nayeem et al for GA with elitism and growing population size
-def perform_genetic_algorithm(network_population, population_size, num_elites, num_generations, mutation_probability, num_mutations_probabilities, num_crossovers_probabilities,
+def perform_genetic_algorithm(network_population, population_size, num_elites, num_generations, mutation_probability, 
+                              num_mutations_probabilities, num_crossovers_probabilities, mutation_threshold_dist,
                               with_elitism=False, with_growing_population=False, num_mutations_per_generation=1):
     
     # Do this for the assigned number of generations for the GA
@@ -31,8 +37,22 @@ def perform_genetic_algorithm(network_population, population_size, num_elites, n
         
         # Most naive selection approach: get top two scoring networks as parents
         # But should be random with weighted probabilities so that elites are not always parents
+        """
         parent1 = sorted_network_population[0]
         parent2 = sorted_network_population[1]
+        """
+
+        # Roulette Wheel Selection 
+        # Chromosomes with higher fitness have a bigger "slice of the pie", but are not 
+        # guaranteed to be selected as parents
+        # This is to prevent premature convergence and ensure that the best networks are not always selected as parents
+        max = sum([network.fitness_score for network in sorted_network_population])
+        selection_p = [network.fitness_score / max for network in sorted_network_population]
+        parent1_index = np.random.choice(sorted_network_population, 1, p=selection_p)
+        parent1 = sorted_network_population[parent1_index]
+        del selection_p[parent1_index]
+        parent2_index = np.random.choice(np.setdiff1d(sorted_network_population, parent1), 1, p=selection_p)
+        parent2 = sorted_network_population[parent2_index]
 
         # Take num_elites number of the best networks and automatically add them to the next generation
         if (with_elitism):
@@ -60,9 +80,9 @@ def perform_genetic_algorithm(network_population, population_size, num_elites, n
             for j in range(num_mutations):
                 # Apply mutations to the children based on mutation probability hyperparameter
                 if np.random.rand() < mutation_probability:
-                    child1 = mutate(child1)
+                    child1 = mutate(child1, mutation_threshold_dist)
                 if np.random.rand() < mutation_probability:
-                    child2 = mutate(child2)
+                    child2 = mutate(child2, mutation_threshold_dist)
             
             # Add the children to the new population
             new_network_population.append(child1)
@@ -123,7 +143,7 @@ def crossover_split_index(network1, network2):
 # num_crossovers_probabilities = list of probabilities for crossovers that will be randomly selected from
 #    e.g. [0.1, 0.2, 0.3, 0.4, 0.5] would mean a 0.1 probability for 0 crossovers, 0.2 probability for 1 crossover, etc
 def crossover_swap_routes(network1, network2, num_crossovers_probabilities):
-    num_crossovers = np.random.choice(len(crossover_probabilities), 1, p=crossover_probabilities)[0]
+    num_crossovers = np.random.choice(len(num_crossovers_probabilities), 1, p=num_crossovers_probabilities)[0]
 
     for i in range(num_crossovers):
         # Randomly select a route from each network
@@ -138,9 +158,32 @@ def crossover_swap_routes(network1, network2, num_crossovers_probabilities):
 
 
 # Modify the stop connections of a random route in the network
-# Can't really implement this without the data structure of the network
-def mutate(network):
-    pass
+# Randomly select a route and randomly select a stop in that route
+# Then randomly select another stop that is a not too far from the selected stop based on threshold
+# Swap connections with that stop
+def mutate(network, threshold_dist):
+    # Randomly select a route
+    random_route = np.random.choice(network.items())
+
+    # Randomly select a stop in the route
+    random_stop_index = np.random.choice(len(random_route))
+    random_stop = random_route[random_stop_index]
+
+    # Will try searching for a random stop 50 times (arbitrary)
+    for i in range(50):
+        other_random_route = np.random.choice(network.items())
+        other_random_stop_index = np.random.choice(len(other_random_route))
+        other_random_stop = other_random_route[other_random_stop_index]
+
+        # Uses the haversine formula but this might screw things up,
+        # change distance formula as necessary
+        if haversine(random_stop, other_random_stop) < threshold_dist:
+            # Swap connections
+            random_route[random_stop_index] = other_random_stop
+            other_random_route[other_random_stop_index] = random_stop
+            break
+
+    return network
 
 
 """
