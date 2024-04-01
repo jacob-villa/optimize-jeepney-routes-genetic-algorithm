@@ -39,13 +39,12 @@ def compute_connectivity(network):
     # External connectivity - measure how connected is the jeepney route network with other modes of transpo
     
     # Get the ratio of transportation stops to total stops in the network
-    num_transpo_stops = count(stop in network where stop.type = 'Transportation')
-    total_stops = count(stop in network)
-    transpo_stop_ratio = num_transpo_stops / total_stops
+    transpo_stops = [stop for stop in network.reshape(-1) if stop.isTranspo]
+    total_stops = len(network.reshape(-1))
+    transpo_stop_ratio = len(transpo_stops) / total_stops
 
     # Get the average degree of all transportation stops in the network
-    transpo_stops = get_stops(network, type='Transportation')
-    avg_transpo_degree = sum(degree(stop) for stop in transpo_stops) / len(transpo_stops)
+    avg_transpo_degree = sum(stop.degree for stop in transpo_stops) / len(transpo_stops)
 
     # Find a way to normalize the two values and combine them 
 
@@ -68,7 +67,8 @@ def compute_connectivity(network):
     external_weight = 0.5
     internal_weight = 0.5
 
-    return external_weight * transpo_stop_ratio + internal_weight * avg_transpo_degree
+    # Formula subject to change
+    return external_weight * (transpo_stop_ratio * avg_transpo_degree) + internal_weight * num_intersections
 
 
 def compute_random_failure_robustness(road_snapped_network_graph, num_removals):
