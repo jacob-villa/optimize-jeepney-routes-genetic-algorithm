@@ -170,8 +170,7 @@ def haversine(lat1, lon1, lat2, lon2):
 # Markers for visualization purposes
 def add_markers(used_stops):
     for stop in used_stops:
-        popup_text = f"Name: {stop.name}<br>Type: {stop.a_type}<br>Coordinates: {stop.getLat()}, {stop.getLong()}"
-        folium.Marker(location=[stop.road_lat, stop.road_long], popup=popup_text).add_to(map)
+        folium.Marker(location=[stop.lat, stop.long]).add_to(map)
         
 
 #GET STOPS -----------------------------------------------------------
