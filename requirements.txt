@@ -1,0 +1,11 @@
+pandas
+numpy
+geopandas
+networkx
+shapely
+folium
+osmnx
+rtree
+utm
+geopy
+scipy
